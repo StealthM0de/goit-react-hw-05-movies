@@ -1,10 +1,13 @@
+import { useEffect, useState, Suspense } from 'react';
+import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
+import { fetchMovieDetails } from '../../services/themoviedb-api';
+import { Button } from 'components/Button/Button';
 import { Loader } from 'components/Loader/Loader';
-import React, { useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import css from './MovieDetailsPage.module.css';
 
-const MoviesDetailsPage = () => {
+const MovieDetailsPage = () => {
   const { movieId } = useParams();
-  cpmst[(MoviesDetailsPage, setMovieDetails)] = useState();
+  const [movieDetails, setMovieDetails] = useState();
   const location = useLocation();
   const backLinkHref = location.state?.from ?? '/';
 
@@ -20,17 +23,18 @@ const MoviesDetailsPage = () => {
   }, [movieId]);
 
   if (!movieDetails) {
-    return <loader />;
+    return <Loader />;
   }
 
   return (
     <>
-      <link to={backLinkHref}>
+      <Link to={backLinkHref}>
         <Button text="⬅ Go back" />
-      </link>
-      <div className={CSS.movieDetailsContainer}>
+      </Link>
+
+      <div className={css.movieDetailsContainer}>
         <img
-          className={CSS.image}
+          className={css.image}
           src={
             movieDetails.poster_path
               ? `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`
@@ -46,7 +50,7 @@ const MoviesDetailsPage = () => {
           <h2>Genres</h2>
           <p>
             {movieDetails.genres.map(genre => (
-              <span key={genre.id}>{genre.name}</span>
+              <span key={genre.id}> {genre.name}</span>
             ))}
           </p>
         </div>
@@ -54,12 +58,12 @@ const MoviesDetailsPage = () => {
 
       <hr />
       <h3>Additional information</h3>
-      <link to="cast">
+      <Link to="cast">
         <Button text="Cast" />
-      </link>
-      <link to="reviews">
+      </Link>
+      <Link to="reviews">
         <Button text="Reviews" />
-      </link>
+      </Link>
       <hr />
       <Suspense fallback={<Loader />}>
         <Outlet />
@@ -68,4 +72,4 @@ const MoviesDetailsPage = () => {
   );
 };
 
-export default MoviesDetailsPage;
+export default MovieDetailsPage;

@@ -6,7 +6,7 @@ import { lazy } from 'react';
 const HomePage = lazy(() => import('pages/HomePage/HomePage'));
 const MoviesPage = lazy(() => import('pages/MoviesPage/MoviesPage'));
 const MovieDetailsPage = lazy(() =>
-  import('pages/MoviesDetailsPage/MovieDetailsPage')
+  import('pages/MovieDetailsPage/MovieDetailsPage')
 );
 const CastList = lazy(() => import('./CastList/CastList'));
 const ReviewList = lazy(() => import('./ReviewList/ReviewList'));
